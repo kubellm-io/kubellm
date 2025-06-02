@@ -1,0 +1,173 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: users.iam.kubellm.io
+spec:
+  group: iam.kubellm.io
+  names:
+    categories:
+    - iam
+    kind: User
+    listKind: UserList
+    plural: users
+    shortNames:
+    - usr
+    singular: user
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - description: 用户的显示名称
+      jsonPath: .spec.displayName
+      name: DisplayName
+      type: string
+    - description: 用户的电子邮件地址
+      jsonPath: .spec.email
+      name: Email
+      type: string
+    - description: 用户的当前状态
+      jsonPath: .status.state
+      name: Status
+      type: string
+    - description: 用户最后登录时间
+      jsonPath: .status.lastLoginTime
+      name: LastLoginTime
+      type: date
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            type: string
+          kind:
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              avatar:
+                maxLength: 2048
+                type: string
+              department:
+                maxLength: 256
+                type: string
+              description:
+                maxLength: 1024
+                type: string
+              displayName:
+                maxLength: 128
+                type: string
+              email:
+                format: email
+                maxLength: 254
+                type: string
+              externalID:
+                maxLength: 256
+                type: string
+              groups:
+                items:
+                  type: string
+                type: array
+                x-kubernetes-list-type: set
+              identityProvider:
+                maxLength: 64
+                type: string
+              lang:
+                maxLength: 32
+                type: string
+              loginDisabled:
+                type: boolean
+              password:
+                maxLength: 128
+                minLength: 8
+                type: string
+              phoneNumber:
+                maxLength: 32
+                pattern: ^\\+?[0-9\\s\\-\\(\\)]*$
+                type: string
+              position:
+                maxLength: 128
+                type: string
+            required:
+            - email
+            type: object
+          status:
+            properties:
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              failedLoginAttempts:
+                format: int32
+                type: integer
+              lastLoginIp:
+                maxLength: 512
+                type: string
+              lastLoginTime:
+                format: date-time
+                type: string
+              lastTransitionTime:
+                format: date-time
+                type: string
+              message:
+                maxLength: 1024
+                type: string
+              passwordExpiryTime:
+                format: date-time
+                type: string
+              passwordLastChangedTime:
+                format: date-time
+                type: string
+              reason:
+                maxLength: 256
+                type: string
+              state:
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

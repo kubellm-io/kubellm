@@ -23,7 +23,7 @@ import (
 	time "time"
 
 	versioned "github.com/kubellm-io/kubellm/pkg/generated/clientset/versioned"
-	clusterkubellmio "github.com/kubellm-io/kubellm/pkg/generated/informers/externalversions/cluster.kubellm.io"
+	iamkubellmio "github.com/kubellm-io/kubellm/pkg/generated/informers/externalversions/iam.kubellm.io"
 	internalinterfaces "github.com/kubellm-io/kubellm/pkg/generated/informers/externalversions/internalinterfaces"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -253,9 +253,9 @@ type SharedInformerFactory interface {
 	// client.
 	InformerFor(obj runtime.Object, newFunc internalinterfaces.NewInformerFunc) cache.SharedIndexInformer
 
-	Cluster() clusterkubellmio.Interface
+	Iam() iamkubellmio.Interface
 }
 
-func (f *sharedInformerFactory) Cluster() clusterkubellmio.Interface {
-	return clusterkubellmio.New(f, f.namespace, f.tweakListOptions)
+func (f *sharedInformerFactory) Iam() iamkubellmio.Interface {
+	return iamkubellmio.New(f, f.namespace, f.tweakListOptions)
 }

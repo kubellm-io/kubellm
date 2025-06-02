@@ -19,7 +19,9 @@ package applyconfiguration
 
 import (
 	v1alpha1 "github.com/kubellm-io/kubellm/pkg/apis/cluster.kubellm.io/v1alpha1"
+	iamkubellmiov1alpha1 "github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1"
 	clusterkubellmiov1alpha1 "github.com/kubellm-io/kubellm/pkg/generated/applyconfiguration/cluster.kubellm.io/v1alpha1"
+	applyconfigurationiamkubellmiov1alpha1 "github.com/kubellm-io/kubellm/pkg/generated/applyconfiguration/iam.kubellm.io/v1alpha1"
 	internal "github.com/kubellm-io/kubellm/pkg/generated/applyconfiguration/internal"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -53,6 +55,14 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &clusterkubellmiov1alpha1.ResourceModelRangeApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("ResourceSummary"):
 		return &clusterkubellmiov1alpha1.ResourceSummaryApplyConfiguration{}
+
+		// Group=iam.kubellm.io, Version=v1alpha1
+	case iamkubellmiov1alpha1.SchemeGroupVersion.WithKind("User"):
+		return &applyconfigurationiamkubellmiov1alpha1.UserApplyConfiguration{}
+	case iamkubellmiov1alpha1.SchemeGroupVersion.WithKind("UserSpec"):
+		return &applyconfigurationiamkubellmiov1alpha1.UserSpecApplyConfiguration{}
+	case iamkubellmiov1alpha1.SchemeGroupVersion.WithKind("UserStatus"):
+		return &applyconfigurationiamkubellmiov1alpha1.UserStatusApplyConfiguration{}
 
 	}
 	return nil

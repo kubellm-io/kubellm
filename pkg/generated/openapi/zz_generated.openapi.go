@@ -44,6 +44,10 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/kubellm-io/kubellm/pkg/apis/cluster.kubellm.io/v1alpha1.ResourceModel":           schema_pkg_apis_clusterkubellmio_v1alpha1_ResourceModel(ref),
 		"github.com/kubellm-io/kubellm/pkg/apis/cluster.kubellm.io/v1alpha1.ResourceModelRange":      schema_pkg_apis_clusterkubellmio_v1alpha1_ResourceModelRange(ref),
 		"github.com/kubellm-io/kubellm/pkg/apis/cluster.kubellm.io/v1alpha1.ResourceSummary":         schema_pkg_apis_clusterkubellmio_v1alpha1_ResourceSummary(ref),
+		"github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.User":                        schema_pkg_apis_iamkubellmio_v1alpha1_User(ref),
+		"github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.UserList":                    schema_pkg_apis_iamkubellmio_v1alpha1_UserList(ref),
+		"github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.UserSpec":                    schema_pkg_apis_iamkubellmio_v1alpha1_UserSpec(ref),
+		"github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.UserStatus":                  schema_pkg_apis_iamkubellmio_v1alpha1_UserStatus(ref),
 		"k8s.io/api/admissionregistration/v1.AuditAnnotation":                                        schema_k8sio_api_admissionregistration_v1_AuditAnnotation(ref),
 		"k8s.io/api/admissionregistration/v1.ExpressionWarning":                                      schema_k8sio_api_admissionregistration_v1_ExpressionWarning(ref),
 		"k8s.io/api/admissionregistration/v1.MatchCondition":                                         schema_k8sio_api_admissionregistration_v1_MatchCondition(ref),
@@ -1099,6 +1103,325 @@ func schema_pkg_apis_clusterkubellmio_v1alpha1_ResourceSummary(ref common.Refere
 		},
 		Dependencies: []string{
 			"github.com/kubellm-io/kubellm/pkg/apis/cluster.kubellm.io/v1alpha1.AllocatableModeling", "k8s.io/apimachinery/pkg/api/resource.Quantity"},
+	}
+}
+
+func schema_pkg_apis_iamkubellmio_v1alpha1_User(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "User 是用户API的架构定义了系统中的一个用户及其相关信息。 用户是进行认证和授权的主体。 metadata.name 被用作用户的登录名，必须全局唯一。 User 用户资源定义 @Description 用户是系统中进行认证和授权的主体。 @APIVersion iam.kubellm.io/v1alpha1 @Kind User @Resource scope=\"Cluster\"",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Description: "StandardObjectMeta是标准的Kubernetes对象元数据。 metadata.name 是用户的登录名，在集群中必须唯一。",
+							Default:     map[string]interface{}{},
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+					"spec": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Spec 定义了用户的期望状态。 @Required true",
+							Default:     map[string]interface{}{},
+							Ref:         ref("github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.UserSpec"),
+						},
+					},
+					"status": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Status 定义了用户的观察到的状态。",
+							Default:     map[string]interface{}{},
+							Ref:         ref("github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.UserStatus"),
+						},
+					},
+				},
+				Required: []string{"spec"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.UserSpec", "github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.UserStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_pkg_apis_iamkubellmio_v1alpha1_UserList(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "UserList 包含用户列表。 @Description UserList是User资源的集合。",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Description: "StandardListMeta是标准的Kubernetes列表元数据。",
+							Default:     map[string]interface{}{},
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
+						},
+					},
+					"items": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Items 是User对象的列表。 @Required true",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.User"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"items"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1.User", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
+	}
+}
+
+func schema_pkg_apis_iamkubellmio_v1alpha1_UserSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "UserSpec 定义用户的期望状态。 @Description UserSpec包含用户的所有配置信息。",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"displayName": {
+						SchemaProps: spec.SchemaProps{
+							Description: "DisplayName 是用户的显示名称，用于UI展示。用户可以修改此字段。 @Description 用户的显示名称，可由用户自定义。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"email": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Email 是用户的唯一电子邮件地址，遵循RFC 5322规范。此字段为必需字段。 @Description 用户的唯一电子邮件地址。 @Required true",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"password": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Password 存储用户密码的加密哈希值。 此密码哈希由kubellm-auth-server在创建或更新用户时生成和管理。 密码必须满足一定的复杂度要求。 @Description 用户密码的加密哈希值。此字段为只写（WriteOnly）或在特定条件下可更新，不应直接读取其内容。 @Format password 根据bcrypt哈希长度调整，或者如果存储原始密码则为64",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"lang": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Lang 是用户的首选语言代码，例如 \"en-US\", \"zh-CN\"。遵循BCP 47规范。 @Description 用户的首选语言代码 (例如 \"en-US\", \"zh-CN\")。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"description": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Description 是对用户的文本描述。 @Description 用户的详细描述信息。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"groups": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
+						SchemaProps: spec.SchemaProps{
+							Description: "Groups 是用户所属的组列表。组用于聚合权限。 @Description 用户所属的用户组名称列表。",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: "",
+										Type:    []string{"string"},
+										Format:  "",
+									},
+								},
+							},
+						},
+					},
+					"phoneNumber": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PhoneNumber 是用户的电话号码。 @Description 用户的电话号码。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"avatar": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Avatar 是用户头像的URL或标识符。 @Description 用户头像的URL或Base64编码的图像数据。 URL长度或base64大小限制",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"department": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Department 是用户所属的部门或组织单元。 @Description 用户所属的部门或组织单元。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"position": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Position 是用户的职位。 @Description 用户的职位信息。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"externalID": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ExternalID 是用于关联外部系统用户的标识符 (例如，LDAP的entryUUID, OAuth提供者的sub等)。 通常在通过外部身份提供者创建用户时设置。 @Description 关联的外部系统用户标识符。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"identityProvider": {
+						SchemaProps: spec.SchemaProps{
+							Description: "IdentityProvider 指定创建此用户的身份提供者名称 (例如 'local', 'ldap', 'oidc-github')。 如果为空，默认为 'local' 或由系统决定。 @Description 创建此用户的身份提供者名称。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"loginDisabled": {
+						SchemaProps: spec.SchemaProps{
+							Description: "LoginDisabled 指示用户是否被禁止登录。 与 UserStatus 中的 State 不同，此字段为管理员控制，用于临时或永久禁止用户登录，而不改变其账户状态（如Active）。 @Description 管理员设置的用户登录禁用状态。true表示禁止登录。",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+				},
+				Required: []string{"email"},
+			},
+		},
+	}
+}
+
+func schema_pkg_apis_iamkubellmio_v1alpha1_UserStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "UserStatus 定义用户的观察到的状态。 @Description UserStatus包含了用户的运行时状态信息。",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"state": {
+						SchemaProps: spec.SchemaProps{
+							Description: "State 是用户当前的账户状态。 @Description 用户的当前计算状态 (例如 Active, Disabled, Locked)。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"reason": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Reason 是对当前状态的一个简短、人类可读的解释。 @Description 解释当前状态的原因。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"message": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Message 是对当前状态的更详细描述。 @Description 提供关于当前状态的更详细信息。",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"lastTransitionTime": {
+						SchemaProps: spec.SchemaProps{
+							Description: "LastTransitionTime 是用户状态上一次发生变更的时间。 @Description 用户状态最后转换的时间戳。",
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+						},
+					},
+					"lastLoginTime": {
+						SchemaProps: spec.SchemaProps{
+							Description: "LastLoginTime 是用户最后一次成功登录系统的时间。 @Description 用户最后成功登录的时间戳。",
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+						},
+					},
+					"lastLoginIp": {
+						SchemaProps: spec.SchemaProps{
+							Description: "LastLoginIP 是用户最后一次成功登录系统时使用的IP地址。 @Description 用户最后成功登录时使用的客户端IP地址。 IPv6 + port",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"failedLoginAttempts": {
+						SchemaProps: spec.SchemaProps{
+							Description: "FailedLoginAttempts 记录了近期连续登录失败的次数。达到一定阈值后可能会触发账户锁定或登录限制。 @Description 近期连续登录失败的次数。",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+					"passwordExpiryTime": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PasswordExpiryTime 是用户当前密码的过期时间。如果为空，表示密码永不过期或策略未启用。 @Description 用户当前密码的过期时间。",
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+						},
+					},
+					"passwordLastChangedTime": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PasswordLastChangedTime 是用户最后一次修改密码的时间。 @Description 用户最后一次修改密码的时间。",
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+						},
+					},
+					"conditions": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-map-keys": []interface{}{
+									"type",
+								},
+								"x-kubernetes-list-type":       "map",
+								"x-kubernetes-patch-merge-key": "type",
+								"x-kubernetes-patch-strategy":  "merge",
+							},
+						},
+						SchemaProps: spec.SchemaProps{
+							Description: "Conditions 包含用户当前状态的结构化条件列表。 @Description 用户的当前状况的详细条件列表。",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Condition"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.Condition", "k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
 	}
 }
 

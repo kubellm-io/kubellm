@@ -20,7 +20,7 @@ package externalversions
 import (
 	fmt "fmt"
 
-	v1alpha1 "github.com/kubellm-io/kubellm/pkg/apis/cluster.kubellm.io/v1alpha1"
+	v1alpha1 "github.com/kubellm-io/kubellm/pkg/apis/iam.kubellm.io/v1alpha1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -51,9 +51,9 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=cluster.kubellm.io, Version=v1alpha1
-	case v1alpha1.SchemeGroupVersion.WithResource("clusters"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Cluster().V1alpha1().Clusters().Informer()}, nil
+	// Group=iam.kubellm.io, Version=v1alpha1
+	case v1alpha1.SchemeGroupVersion.WithResource("users"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Iam().V1alpha1().Users().Informer()}, nil
 
 	}
 

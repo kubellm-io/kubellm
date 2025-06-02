@@ -22,6 +22,8 @@ import (
 	clientset "github.com/kubellm-io/kubellm/pkg/generated/clientset/versioned"
 	clusterv1alpha1 "github.com/kubellm-io/kubellm/pkg/generated/clientset/versioned/typed/cluster.kubellm.io/v1alpha1"
 	fakeclusterv1alpha1 "github.com/kubellm-io/kubellm/pkg/generated/clientset/versioned/typed/cluster.kubellm.io/v1alpha1/fake"
+	iamv1alpha1 "github.com/kubellm-io/kubellm/pkg/generated/clientset/versioned/typed/iam.kubellm.io/v1alpha1"
+	fakeiamv1alpha1 "github.com/kubellm-io/kubellm/pkg/generated/clientset/versioned/typed/iam.kubellm.io/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -118,4 +120,9 @@ var (
 // ClusterV1alpha1 retrieves the ClusterV1alpha1Client
 func (c *Clientset) ClusterV1alpha1() clusterv1alpha1.ClusterV1alpha1Interface {
 	return &fakeclusterv1alpha1.FakeClusterV1alpha1{Fake: &c.Fake}
+}
+
+// IamV1alpha1 retrieves the IamV1alpha1Client
+func (c *Clientset) IamV1alpha1() iamv1alpha1.IamV1alpha1Interface {
+	return &fakeiamv1alpha1.FakeIamV1alpha1{Fake: &c.Fake}
 }
