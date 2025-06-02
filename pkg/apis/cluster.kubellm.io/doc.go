@@ -1,0 +1,10 @@
+// +k8s:defaulter-gen=TypeMeta
+// +k8s:validation-gen=TypeMeta
+// +k8s:protobuf-gen=package
+// +genclient
+// +genclient:nonNamespaced
+// +k8s:client-gen=true
+// +k8s:openapi-gen=true
+// +k8s:deepcopy-gen=package
+// +groupName=cluster.kubellm.io
+package cluster
